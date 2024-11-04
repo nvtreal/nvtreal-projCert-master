@@ -1,0 +1,2 @@
+[test_server]
+192.168.146.130 ansible_user=nvtreal-fe ansible_ssh_private_key_file=/home/nvtreal-fe/.ssh/id_ed25519

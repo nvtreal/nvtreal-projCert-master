@@ -1,0 +1,36 @@
+---
+- hosts: 192.168.146.130
+  become: yes
+  tasks:
+    - name: Install necessary packages for Docker
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/fedora/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/fedora focal stable
+        state: present
+
+    - name: Update and install Docker
+      apt:
+        update_cache: yes
+        name: docker-ce
+        state: present
+
+    - name: Start Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
